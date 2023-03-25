@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArtistController;
@@ -41,9 +41,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('coments');
 
 Route::post('/playlist/add', [App\Http\Controllers\UserPlaylistController::class, 'addSongToPlaylist'])->name('playlist.add');
-Route::get('/search', 'SearchController@search')->name('search');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::post('/songs/{song}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments');
+
+Route::get('/recherche', function () {
+    return view('recherche');
+});
 
 
 Route::resource('/',CommentController::class);

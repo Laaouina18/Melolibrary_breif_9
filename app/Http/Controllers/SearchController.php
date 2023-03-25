@@ -17,6 +17,6 @@ class SearchController extends Controller
         $artists = Artist::where('name', 'LIKE', "%$query%")->get();
         $genres = Genre::where('name', 'LIKE', "%$query%")->get();
 
-        return view('search', compact('songs', 'artists', 'genres'));
+        return view('recherche', compact('songs', 'artists', 'genres'));
     }
 }

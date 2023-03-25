@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('content')
 <form action="{{ route('search') }}" method="get">
     <div class="form-group">
         <label for="query">Recherche:</label>
@@ -7,3 +7,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
+@endsection
