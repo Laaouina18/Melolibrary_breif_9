@@ -45,9 +45,7 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::post('/songs/{song}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments');
 
-Route::get('/recherche', function () {
-    return view('recherche');
-});
+Route::get('/recherche', [SearchController::class, 'index'])->name('search');
 
 
 Route::resource('/',CommentController::class);

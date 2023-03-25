@@ -21,7 +21,7 @@ class SongController extends Controller
     public function index()
     { 
         $songt=Song::all();
-        return view('welcome')->with('song',$songt);
+        return view('song.index')->with('song',$songt);
     
     }
 

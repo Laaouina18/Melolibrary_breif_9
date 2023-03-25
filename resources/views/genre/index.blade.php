@@ -1,58 +1,72 @@
-@extends('layout')
+@extends('layouts.app')
+
+
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
 <div class="container">
-    <div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
 
-    <div>
-        <h2>welcome</h2>
-        <a href="{{url('/genre/create')}}" class="btn btn-info">
-            ajouter
-</a>
+                <!-- Ajouter un sous-nav pour les genres, les artistes et les chansons -->
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{url('song')}}">Chansons</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('artist')}}">Artistes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{url('genre')}}">Genres</a>
+                        </li>
+                    </ul>
+                </div>
+               
+    <div class="row">
+        <div class="col-md-10" style="margin:auto;padding-top:10%">
+            <a href="{{ url('/genre/create') }}" class="btn btn-info">Ajouter Genre</a>
+            <br><br>
 
-        <div class="table-responsive">
-  <table class="table">
-  <caption>List of users</caption>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Image</th>
-      <th scope="col">Description</th>
-     
-      <th scope="col"> action</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($genre as $item)
-    <tr>
-      <td scope="row">{{$loop->iteration}}</td>
-      <td>{{$item->name}}</td>
-      <td>{{$item->image}}</td>
-      <td>{{$item->description}}</td>
-      
-      <td>
-      <a href="{{ url('/genre/' . $item->id ) }}" class="btn btn-primary">SHOW</a>
-        <a href="{{url('/genre/'.$item->id.'/edit')}}" class="btn btn-primary">edit</a>
-        <form action="{{url('/genre/'.$item->id)}}" method="post">
-          {{method_field('DELETE')}}
-          {{csrf_field()}}
-        <button  class="btn btn-danger" type="submit" onclick="return confirm('confirm delete?')">delete</button>
-        </form>
-      
-      </td>
-    </tr>
-    @endforeach
-   
- 
-  </tbody>
-</table>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <caption>La liste des Genres</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($genre as $genre)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $genre->name }}</td>
+                            <td><img src="{{ asset('storage/images/'.$genre->image) }}" alt="{{ $genre->name }}" width="50"></td>
+                            <td>{{ $genre->description }}</td>
+                            <td style="display:flex;justify-content:space-around">
+                                <!-- <a href="{{ url('/genre/'.$genre->id) }}" class="btn btn-primary">Show</a> -->
+                                <a  class="btn btn-sm btn-info" href="{{ url('/genre/'.$genre->id.'/edit') }}" >modifier</a>
+                                <form action="{{ url('/genre/'.$genre->id) }}" method="post" style="display:inline-block;">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this genre?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+    </table>
+  </div>
 </div>
-    </div>
-    </div>
-
-    
 </div>
+</div>
+          
+        </div>
+    </div>
+</div>
+
 @endsection

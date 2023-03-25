@@ -1,44 +1,53 @@
-@extends('layout')
+@extends('layouts.app')
 @section('content')
-<h1>edit artist</h1>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
-
-
-<div>
-    <h1>ajouter un artist</h1>
-<form action="{{url('artist/'.$artist->id)}}" method="post">
-
-    {!!csrf_field()!!}
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Artist</h1>
+    <form action="{{ url('artist/'.$artist->id) }}" method="POST" enctype="multipart/form-data">
+    {!! csrf_field() !!}
     {{ method_field('PATCH') }}
-   
-  <div class="form-group">
-    <label for="exampleFormControlInput1">name</label>
-    <input type="text" class="form-control" value="{{$artist->name}}" id="exampleFormControlInput1" name="name" placeholder="....">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">country</label>
-    <input type="text" class="form-control" value="{{$artist->country}}" id="exampleFormControlInput1" name="country" placeholder="....">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">description</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" value="{{$artist->description}}"  name="description" placeholder="....">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">image</label>
-    <input type="file" class="form-control" id="exampleFormControlInput1" name="image" >
-  </div>
-  
-  <div class="form-group">
-  <label for="start" >Start date:</label>
 
-<input type="date" id="start" name="birthday"
-       value="2018-07-22"
-       min="2018-01-01"value="{{$artist->birthday}}" max="2018-12-31">
-  </div>
-  <button class="btn " value="update">save</button>
+    <div class="row mb-3">
+        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputName" name="name" placeholder="Enter artist name" value="{{ $artist->name }}">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputCountry" class="col-sm-2 col-form-label">Country</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputCountry" name="country" placeholder="Enter country name" value="{{ $artist->country }}">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="inputDescription" name="description" rows="3" placeholder="Enter artist description">{{ $artist->description }}</textarea>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputImage" class="col-sm-2 col-form-label">Image</label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control" id="inputImage" name="image">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputBirthday" class="col-sm-2 col-form-label">Birthday</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="inputBirthday" name="birthday" value="{{ $artist->birthday }}">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
 </form>
 </div>
-@stop
+@endsection
