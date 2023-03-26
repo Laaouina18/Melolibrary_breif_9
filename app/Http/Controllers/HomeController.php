@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function index(){
         $songt=Song::all();
-        return view('welcome')->with('song',$songt);
+        return view('music')->with('song',$songt);
     
     }
     public function __construct()

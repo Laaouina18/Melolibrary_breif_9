@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 class UserPlaylistController extends Controller
 {
+    public function index(){
+        $play=UserPlaylist::all();
+        return view('welcome')->with('play',$play);
+    
+    }
     public function addSongToPlaylist(Request $request)
     {
         $user = auth()->user();

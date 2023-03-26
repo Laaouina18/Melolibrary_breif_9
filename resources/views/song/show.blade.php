@@ -69,19 +69,19 @@
        </div>
    </div>
    <div class="container mt-4">
-    <h4>Ajouter un commentaire</h4>
+   <h4>Commentaires</h4>
     <form action="{{ route('comments', ['song' => $song->id]) }}" method="POST">
         @csrf
-        <div class="form-group">
-            <label for="comment">Commentaire :</label>
-            <input class="form-control" id="comment" name="body" rows="5" required></textarea>
+        <div class="form-group" >
+          
+            <input class="form-control" id="comment" name="body" rows="5" style="width:100%" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 
     <hr>
 
-    <h4>Commentaires</h4>
+   
     <div class="comments">
         @foreach($song->comments as $comment)
             <div class="comment">

@@ -85,22 +85,23 @@
     <!-- small music player -->
 	<div class="row">
 		
-	@foreach($song as $song)
+	@foreach($play as $play)
+	@if(Auth::user()->id==$play->user_id)
 	<div class="song col-md-12 col-lg-12 mb-12">
 	
       <div class="img">
-      <img src="{{ asset('storage/images/'.$song->artist->image) }}""/>
+      <img src="{{ asset('storage/images/'.$play->song->artist->image) }}""/>
       </div>
       <div class="more">
       <audio src="{{asset('images/1.jpg')}}" id="music"></audio>
       <div class="song_info">
-         <p id="title">{{$song->title}}</p>
-         <p>{{$song->artist->name}}</p>
+         <p id="title">{{$play->song->title}}</p>
+         <p>{{$play->song->artist->name}}</p>
       </div>
-      <a href="{{ url('/song/' . $song->id ) }}"id="play_btn"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+      <a href="{{ url('/song/' . $play->song->id ) }}"id="play_btn"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
       </div>
     </div>
-	
+	@endif
 	@endforeach
 
 
