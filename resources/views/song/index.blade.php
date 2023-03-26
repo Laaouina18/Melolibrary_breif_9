@@ -40,7 +40,7 @@
         <th scope="col">#</th>
           <th scope="col">Titre</th>
           <th scope="col">Artiste</th>
-          <th scope="col">Audio</th>
+          <!-- <th scope="col">Audio</th> -->
           <!-- <th scope="col">Ajouter à la liste de lecture</th> -->
           <th scope="col">Action
           </th>
@@ -53,11 +53,11 @@
         <td>{{ $loop->iteration }}</td>
           <td>{{ $song->title }}</td>
           <td>{{ $song->artist->name }}</td>
-          <td>
+          <!-- <td>
             <audio controls>
               <audio src="{{ asset('storage/'.$song->audio_path) }}" type="audio/mpeg">
             </audio>
-          </td>
+          </td> -->
           <!-- <td><button class="btn btn-primary">Ajouter à la liste de lecture</button></td> -->
           <td style="display:flex;justify-content:space-around">
                              
@@ -68,7 +68,7 @@
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this song?')">Archiffer</button>
                                 </form>
                             </td>
-          <!-- <td><a href="{{ url('/song/' . $song->id ) }}" class="btn btn-secondary">Voir plus</a></td> -->
+          <!-- <td><a  class="btn btn-secondary">Voir plus</a></td> -->
         </tr>
         @endforeach
                         </tbody>

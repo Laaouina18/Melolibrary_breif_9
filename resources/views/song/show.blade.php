@@ -74,7 +74,7 @@
         @csrf
         <div class="form-group">
             <label for="comment">Commentaire :</label>
-            <textarea class="form-control" id="comment" name="body" rows="5" required></textarea>
+            <input class="form-control" id="comment" name="body" rows="5" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
@@ -85,9 +85,9 @@
     <div class="comments">
         @foreach($song->comments as $comment)
             <div class="comment">
-                <h6 class="mb-0">{{$comment->user->name}}</h6>
-                <p class="mb-1">{{$comment->body}}</p>
-                <small>{{$comment->created_at}}</small>
+                <h6 class="mb-0">{{$comment->user->name}}: {{$comment->body}}</h6>
+               
+                <small>date:{{$comment->created_at}}</small>
             </div>
         @endforeach
     </div>

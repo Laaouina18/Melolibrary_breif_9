@@ -30,7 +30,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Image</th>
+                    <!-- <th>Image</th> -->
                     <th>Name</th>
                     <th>Description</th>
                     <th>Birthday</th>
@@ -41,9 +41,9 @@
                 @foreach($artist as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
-                    <td>
-                    <img class="card-img-top" src="{{ asset('storage/images/'.$item->image) }}" alt="{{$item->name }}" style="width:80px">
-                    </td>
+                    <!-- <td>
+                    <img class="card-img-top" src="{{ asset('storage/images/'.$item->image) }}" alt="{{$item->name }}" style="width:5%">
+                    </td> -->
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->birthday }}</td>

@@ -1,51 +1,65 @@
-@extends('layout')
+@extends('layouts.app')
+
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<div class="container">
+    <h1 class="mb-5">Ajouter un song</h1>
+    <form action="{{ url('song') }}" method="POST" enctype="multipart/form-data">
+        {!! csrf_field() !!}
 
-<div>
-    <h1>ajouter un song</h1>
-    <form action="{{url('song')}}" method="POST" enctype="multipart/form-data">
-    {!!csrf_field()!!}
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title" required maxlength="255">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" required maxlength="255">
+        </div>
 
-    <label for="year">Year</label>
-    <input type="number" name="year" id="year" required min="1900">
+        <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input type="number" name="year" id="year" class="form-control" required min="1900">
+        </div>
 
-    <label for="track">Track</label>
-    <input type="text" name="track" id="track" required maxlength="255">
+        <div class="mb-3">
+            <label for="track" class="form-label">Track</label>
+            <input type="text" name="track" id="track" class="form-control" required maxlength="255">
+        </div>
 
-    <label for="audio_path">Audio Path</label>
-    <input type="file" name="audio_path" id="audio"  required>
+        <div class="mb-3">
+            <label for="audio_path" class="form-label">Audio Path</label>
+            <input type="file" name="audio_path" id="audio" class="form-control" required>
+        </div>
 
-    <label for="filename">Filename</label>
-    <input type="text" name="filename" id="filename" required maxlength="255">
+        <div class="mb-3">
+            <label for="filename" class="form-label">Filename</label>
+            <input type="text" name="filename" id="filename" class="form-control" required maxlength="255">
+        </div>
 
-    <label for="duration">Duration</label>
-    <input type="time" name="duration" id="duration" required>
+        <div class="mb-3">
+            <label for="duration" class="form-label">Duration</label>
+            <input type="time" name="duration" id="duration" class="form-control" required>
+        </div>
 
-    <label for="genre_id">Genre</label>
-    <select name="genre_id" id="genre_id" required>
-        @foreach ($genre as $genre)
-            <option value="{{ $genre->id }}">{{ $genre->name }}</option>
-        @endforeach
-    </select>
+        <div class="mb-3">
+            <label for="genre_id" class="form-label">Genre</label>
+            <select name="genre_id" id="genre_id" class="form-control" required>
+                @foreach ($genre as $genre)
+                <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-    <label for="artist_id">Artist</label>
-    <select name="artist_id" id="artist_id" required>
-        @foreach ($artists as $artist)
-            <option value="{{ $artist->id }}">{{ $artist->name }}</option>
-        @endforeach
-    </select>
+        <div class="mb-3">
+            <label for="artist_id" class="form-label">Artist</label>
+            <select name="artist_id" id="artist_id" class="form-control" required>
+                @foreach ($artists as $artist)
+                <option value="{{ $artist->id }}">{{ $artist->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-    <label for="lyrics">Lyrics</label>
-    <textarea name="lyrics" id="lyrics" required></textarea>
+        <div class="mb-3">
+            <label for="lyrics" class="form-label">Lyrics</label>
+            <textarea name="lyrics" id="lyrics" class="form-control" required></textarea>
+        </div>
 
-  
-
-    <button type="submit">Create Song</button>
-</form>
-
+        <button type="submit" class="btn btn-primary">Create Song</button>
+    </form>
 </div>
 @endsection

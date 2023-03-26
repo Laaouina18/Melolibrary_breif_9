@@ -1,69 +1,93 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Audio player</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Audio player</title>
+    
+<meta name="keywords" content="audio, player, music">
+<meta property="og:title" content="Audio player">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+ 
+ <!--Script Link  put befor end of </body> -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="{{asset('css/style.css')}}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
 
-<div class="main" >
 
     <!-- top section -->
-	<div class="ensemble">
-		<div class="param">
-			<span id="nav"onclick="openNav()">&#9776;</span>
-		  </div>
-		<div class="top_section">
-			<h5>Audio Player&nbsp;&nbsp;<i class="fa fa-headphones" aria-hidden="true"></i></h5>
-		</div>
+
 	
-	</div>
-	<div id="mySidenav" class="left-nav">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Poiret+One|Biryani|Raleway:300|Source+Code+Pro|Muli" rel="stylesheet">
-		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<div class="navoptions">
-		<a href="#" id="un" ><span class="fa fa-music" aria-hidden="true"></span><p>music</p></a>
-		<a href="#" id="deux" ><span class="fa fa-star-o" aria-hidden="true"></span><p>favorites</p></a>
-		<a href="#" id="trois"><span class="fa fa-share-alt" aria-hidden="true"></span><p>share</p></a>
-		<a href="#" id="quatre" ><span class="fa fa-gear" aria-hidden="true"></span><p>settings</p></a>
-		<a href="#" id="cinq" ><span class="fa fa-search" aria-hidden="true"></span><p>search</p></a>
-		<a href="#" id="six"><span class="fa fa-power-off" aria-hidden="true"></span><p>exit</p></a>
-			</div></div>
+		
+		<body>
     
+		<div class="container-fluid" style="  background: linear-gradient(to right,#434043, #1595be);">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="color:gray;">LISTE DE MUSIQUE</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
+                            </li>
+                        </ul>
+                    </li>
+                 
+                   
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1" style="width:100%"> {{ Auth::user()->name }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                       
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li> <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col py-12">
+        <div class="container-fluid mt-12">
+   
+       
+  <div class="tracks" >
 
-  <div class="tracks">
-    
     <!-- list of song will add here from 'song_list.js' file -->
 
     <!-- small music player -->
-    <div class="small_music_player">
-    	<div class="s_player_img">
-    		<div class="playing_img">
-    			<img src="{{asset('images/1.jpg')}}" alt="">
-    		</div>
-    	
-           <!-- wave animation part -->
-    	   <div class="wave_animation">
-			 <li></li>
-			 <li></li>
-			 <li></li>
-			 <li></li>
-			 <li></li>
-	       </div>
-	    </div>
-
-    	<div class="song_detail">
-    		<p id="song_name">Make Me Move</p>
-    		<p id="artist_name">NoCopyrightSounds [NCS]</p>
-    	</div>
-    	<i class="fa fa-chevron-up" aria-hidden="true" id="up_player"></i>
-    </div>
+	<div class="row">
+		
 	@foreach($song as $song)
-	<div class="song">
+	<div class="song col-md-12 col-lg-12 mb-12">
+	
       <div class="img">
       <img src="{{ asset('storage/images/'.$song->artist->image) }}""/>
       </div>
@@ -73,63 +97,29 @@
          <p id="title">{{$song->title}}</p>
          <p>{{$song->artist->name}}</p>
       </div>
-      <button id="play_btn"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+      <a href="{{ url('/song/' . $song->id ) }}"id="play_btn"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
       </div>
     </div>
+	
 	@endforeach
 
-    <!--  popup music player part -->
-    <div class="popup_music_player">
-		<div style="  width:100%;display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: center;">
-   <div class="top">
-    	    <p>Now Playing</p>
-    	    <i class="fa fa-chevron-down" aria-hidden="true" id="down_player"></i>
-        </div>
+
 	</div>
-        
-       <div class="song_img">
-          <img src="{{asset('images/1.jpg')}}" alt="">
-       </div>
-
-       <div class="song_description">
-          <h3 id="current_track_name">Make Me Move</h3>
-          <p id="current_singer_name">NoCopyrightSounds [NCS]</p>
-       </div>
-
-       <div class="controlls">
-    	 <div class="progress_part">
-    		<input type="range" min="0" max="100" value="0" id="slider" onchange="change_duration()">
-    		<div class="durations">
-    			<p id="current_duration">0:00</p>
-    		    <p id="total_duration">0:00</p>
-    		</div>
-
-       </div>
-    		
-        <!-- controlls btn's -->
-        <div class="controlls_btns">
-			<button id="backward_btn"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
-			<button id="play_pause_btn" ><i class="fa fa-play" aria-hidden="true"></i></button>
-			<audio id="audio" src="{{asset('images/audio.mp3')}}"></audio>
-			<button id="forward_btn"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+</div>
         </div>
-      </div>
     </div>
 </div>
 
 
-</div>
 
 
-<script src="{{ asset('js/main.js') }}"></script>
 
-<!-- song list file -->
-<!-- <script src="song_list.js"></script>
-<!-- javascript -->
-<!-- <script src="main.js"></script> -->
-	 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
 </html>
+
+
+
+
+

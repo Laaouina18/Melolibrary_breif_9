@@ -6,7 +6,7 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +23,8 @@ use App\Http\Controllers\CommentController;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\SongController::class, 'index'])->name('dashboard');
+
 
 
 
@@ -47,8 +49,8 @@ Route::post('/songs/{song}/comments', [App\Http\Controllers\CommentController::c
 
 Route::get('/recherche', [SearchController::class, 'index'])->name('search');
 
-
-Route::resource('/',CommentController::class);
+// Route::resource('/welcome',HomeController::class);
+Route::resource('/',HomeController::class);
 Route::resource('/artist',ArtistController::class);
 Route::resource('/song',SongController::class);
 Route::resource('/genre',GenreController::class);
