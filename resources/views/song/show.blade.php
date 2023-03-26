@@ -10,17 +10,71 @@
 <meta property="og:title" content="Audio player">
 
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
-
+<link rel="stylesheet" href="{{asset('js/show.js')}}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+ 
+ <!--Script Link  put befor end of </body> -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
+<div class="container-fluid" style="  background: linear-gradient(to right,#434043, #1595be);" >
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">LISTE DE MUSIQUE</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
+                            </li>
+                        </ul>
+                    </li>
+                 
+                   
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">loser</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3">
+        <div class="container-fluid mt-4">
+    <div class="row">
+       
    <div class="player">
        <div class="wrapper">
            <div class="details">
               
-               <div class="track-art" style="background-image:url('{{ asset('storage/images/'.$song->artist->image) }}');"></div>
+               <div class="track-art" style="background-image:url('{{ asset('storage/images/'.$song->artist->image) }}');" ></div>
 
                <div class="track-name">{{$song->title}}</div>
                <div class="track-artist">{{$song->artist->name}}</div>
@@ -36,7 +90,7 @@
            <form action="{{ route('playlist.add') }}" method="POST">
     @csrf
     <input type="hidden" name="song_id" value="{{ $song->id }}">
-    <button type="submit" class="btn btn-primary">Ajouter à la playlist</button>
+    <button type="submit" class="class="btn btn-info"">Ajouter à la playlist</button>
 </form>
 
            <div class="buttons">
@@ -47,8 +101,11 @@
                     <i class="fa fa-step-backward fa-2x"></i>
                 </div>
                 <div class="playpause-track" >
-                    <i class="fa fa-play-circle fa-5x"></i>
+                    <i class="fa fa-play-circle fa-5x" onclick="playTrack()"></i>
                 </div>
+                <audio id="myAudio">
+  <source src="{{ asset('storage/audio/'.$song->audio_path) }}" type="audio/mpeg">
+</audio>
                 <div class="next-track" >
                     <i class="fa fa-step-forward fa-2x"></i>
                 </div>
@@ -57,26 +114,20 @@
                 </div>
            </div>
 
-            <div id="wave">
-                <span class="stroke"></span>
-                <span class="stroke"></span>
-                <span class="stroke"></span>
-                <span class="stroke"></span>
-                <span class="stroke"></span>
-                <span class="stroke"></span>
-                <span class="stroke"></span>
-            </div>  
+           
        </div>
    </div>
    <div class="container mt-4">
    <h4>Commentaires</h4>
-    <form action="{{ route('comments', ['song' => $song->id]) }}" method="POST">
+    <form  action="{{ route('comments', ['song' => $song->id]) }}" method="POST" style="display:flex;flex-direction:row;justify-content:space-between">
         @csrf
-        <div class="form-group" >
+        <div class="form-group" style="width:88%" >
           
-            <input class="form-control" id="comment" name="body" rows="5" style="width:100%" required></textarea>
+            <input class="form-control" id="comment" name="body" rows="5"  required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <div>
+        <button type="submit" class="btn btn-info">Commenter</button>
+</div>
     </form>
 
     <hr>
@@ -90,6 +141,12 @@
                 <small>date:{{$comment->created_at}}</small>
             </div>
         @endforeach
+    </div>
+</div>
+
+</div>
+</div>
+        </div>
     </div>
 </div>
 

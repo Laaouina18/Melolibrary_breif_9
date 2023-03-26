@@ -107,9 +107,18 @@ $commentaires=Commentaire::all();
         
     }
     public function destroy($id){
-        song::destroy($id);
-       return redirect('song')->with('flash_message','song supprimé');
+        $song = song::find($id);
+        $song->status = 'archived';
+        $song->save();
+        return redirect('song')->with('flash_message', 'Song archived');
     }
+    public function unarchive($id){
+        $song = Song::find($id);
+        $song->status = 'active';
+        $song->save();
+        return redirect()->back()->with('flash_message', 'Song unarchived');
+    }
+    
 
     /**
      * Update the specified resource in storage.

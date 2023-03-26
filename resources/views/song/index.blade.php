@@ -62,11 +62,22 @@
           <td style="display:flex;justify-content:space-around">
                              
                                 <a class="btn btn-sm btn-info"  href=" {{ url('/song/'.$song->id.'/edit') }}" >Modifier</a>
-                                <form action="{{ url('/song/'.$song->id) }}" method="post" style="display:inline-block;">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this song?')">Archiffer</button>
-                                </form>
+                                @if($song->status != 'archived')
+    <form action="{{ url('/song/'.$song->id) }}" method="post" style="display:inline-block;">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+                                    
+        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this song?')">Archiver</button>
+    </form>
+@else
+<form action="{{ route('song.unarchive', $song->id) }}" method="post" style="display:inline-block;">
+    @csrf
+    @method('POST')                
+    <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to unarchive this song?')">Désarchiver</button>
+</form>
+
+@endif
+
                             </td>
           <!-- <td><a  class="btn btn-secondary">Voir plus</a></td> -->
         </tr>

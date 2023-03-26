@@ -46,10 +46,10 @@ Route::get('/comments', [App\Http\Controllers\CommentController::class, 'store']
 
 Route::post('/playlist/add', [App\Http\Controllers\UserPlaylistController::class, 'addSongToPlaylist'])->name('playlist.add');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::post('/song/{id}/unarchive', 'SongController@unarchive')->name('song.unarchive');
 
 Route::post('/songs/{song}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments');
 
-Route::get('/recherche', [SearchController::class, 'index'])->name('search');
 
 // Route::resource('/welcome',HomeController::class);
 Route::resource('/',HomeController::class);

@@ -33,19 +33,19 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
+                        <a href="{{route('play')}}" class="nav-link align-middle px-0">
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="color:gray;">LISTE DE MUSIQUE</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <a href="{{route('dashboard')}}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
+                                <a href="{{route('home')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
+                                <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHERCHE</span>  </a>
                             </li>
                         </ul>
                     </li>
@@ -87,10 +87,11 @@
 		
 	@foreach($play as $play)
 	@if(Auth::user()->id==$play->user_id)
+    @if($play->song->status!='archived')
 	<div class="song col-md-12 col-lg-12 mb-12">
 	
       <div class="img">
-      <img src="{{ asset('storage/images/'.$play->song->artist->image) }}""/>
+      <img src="{{ asset('storage/images/'.$play->song->artist->image) }}"/>
       </div>
       <div class="more">
       <audio src="{{asset('images/1.jpg')}}" id="music"></audio>
@@ -102,6 +103,7 @@
       </div>
     </div>
 	@endif
+    @endif
 	@endforeach
 
 

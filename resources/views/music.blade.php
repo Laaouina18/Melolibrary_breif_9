@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container-fluid" >
+<div class="container-fluid" style="  background: linear-gradient(to right,#434043, #1595be);" >
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -51,21 +51,24 @@
     <div class="row">
        
         @foreach($song as $song)
+        @if($song->status!='archived')
             <div class="col-md-4 col-lg-4 mb-4">
+            <a href="{{ url('/song/' . $song->id ) }}" style="text-decoration: none;">
                 <div class="card">
                     <img src="{{ asset('storage/images/'.$song->artist->image) }}" class="card-img-top" alt="{{ $song->title }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $song->title }}</h5>
-                        <p class="card-text">{{ $song->artist->name }}</p>
-                        <a href="{{ url('/song/' . $song->id ) }}" class="btn btn-primary"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <h5 class="card-title" style="color:black">{{ $song->title }}</h5>
+                        <p class="card-text" style="color:black">{{ $song->artist->name }}</p>
+                  
                         <form action="{{ route('playlist.add') }}" method="POST">
     @csrf
     <input type="hidden" name="song_id" value="{{ $song->id }}">
-    <button type="submit" class="btn btn-primary">Ajouter à la playlist</button>
+    <button type="submit" class="btn btn-info">Ajouter à la playlist</button>
 </form>
                     </div>
-                </div>
+                </div>   </a>
             </div>
+            @endif
         @endforeach
     </div>
 </div>
