@@ -51,7 +51,7 @@
         <div class="mb-3">
             <label for="artist_id" class="form-label">Artist</label>
             <select name="artist_id" id="artist_id" class="form-control" >
-            <option value="3">Aucun</option>
+            <option value="6">Aucun</option>
                 @foreach ($artists as $artist)
                 @if($artist->name!=NULL)
                 

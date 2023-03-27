@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="container-fluid" style="  background: linear-gradient(to right,#434043,#B2EBF2);" >
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -14,12 +15,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('dashboard')}}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
+
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
                                 <a href="{{route('home')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
                             </li>
+                            @if(Auth::user()->admin)
+                            <li class="w-100">
+                                <a href="{{route('dashboard')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">DASHBOARD</span>  </a>
+                            </li>
+                            @endif
                             <li>
                                 <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
                             </li>
@@ -37,19 +42,20 @@
     <div class="row">
        
         @foreach($song as $song)
-        @if($song->status!='archived')
-            <div class="col-md-4 col-lg-4 mb-4">
-            <a href="{{ url('/song/' . $song->id ) }}" style="text-decoration: none;">
-                <div class="card">
+        @if( $song->status!='archived')
+            <div class="col-md-4 col-lg-4 mb-4" >
+            <a href="{{ url('/song/' . $song->id ) }}" style="text-decoration: none;width: 100%;">
+                <div class="card" >
                
-                    <img src="{{ asset('storage/images/'.$song->image) }}" class="card-img-top" alt="{{ $song->title }}">
-                   
+                    <img src="{{ asset('storage/images/'.$song->image) }}" class="card-img-top" alt="{{ $song->title }}" style="width:100%;height:50vh">
+                  
                     <div class="card-body">
                         <h5 class="card-title" style="color:black">{{ $song->title }}</h5>
                       
                         @if( empty($song->groupe->name) && isset($song->artist->name))
          <p class="card-text" style="color:black">{{$song->artist->name}}</p>
          @endif
+  
          @if( empty($song->artist))
          <p class="card-text" style="color:black">{{$song->groupe->name}}</p>
          @endif

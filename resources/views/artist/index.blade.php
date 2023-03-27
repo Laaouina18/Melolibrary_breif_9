@@ -51,7 +51,7 @@
                     <img class="card-img-top" src="{{ asset('storage/images/'.$item->image) }}" alt="{{$item->name }}" style="width:5%">
                     </td> -->
                     <td>{{ $item->name }}</td>
-                    <td><img src="{{ asset('storage/images/'.$item->image) }}" alt="{{ $item->name }}" width="50"></td>
+                    <td><img src="{{ asset('storage/images/'.$item->image) }}" alt="{{ $item->name }}" width="20"></td>
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->birthday }}</td>
                     <td style="display:flex;justify-content:space-around">

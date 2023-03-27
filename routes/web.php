@@ -47,7 +47,6 @@ Route::get('/comments', [App\Http\Controllers\CommentController::class, 'store']
 
 Route::post('/playlist/add', [App\Http\Controllers\UserPlaylistController::class, 'addSongToPlaylist'])->name('playlist.add');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
-Route::post('/song/{id}/unarchive', 'SongController@unarchive')->name('song.unarchive');
 
 Route::post('/songs/{song}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments');
 
@@ -57,4 +56,4 @@ Route::resource('/artist',ArtistController::class);
 Route::resource('/song',SongController::class);
 Route::resource('/genre',GenreController::class);
 Route::resource('/groupe',GrController::class);
-Route::get('/comments/{id}',[CommentController::class,'destory']);
+Route::resource('/comments',CommentController::class);

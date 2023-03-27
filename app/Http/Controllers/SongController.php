@@ -87,10 +87,10 @@ return view('auth.login');
             $chanson->audio_path = $filename;
         }
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $path = $audio_path->storeAs('public/images', $filename);
-            $chanson->image = $image;
+            $image= $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $path = $image->storeAs('public/images', $filename);
+            $chanson->image = $filename;
         }
        
     

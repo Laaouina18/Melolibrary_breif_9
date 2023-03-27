@@ -70,7 +70,7 @@
   <td>{{ $song->artist->name }} && {{ $song->groupe->name }}</td>
 
 @endif
-<td><img src="{{ asset('storage/images/'.$song->image) }}" alt="{{ $song->name }}" width="50"></td>
+<td><img src="{{ asset('storage/images/'.$song->image) }}" alt="{{ $song->name }}" width="20"></td>
           <!-- <td>
             <audio controls>
               <audio src="{{ asset('storage/'.$song->audio_path) }}" type="audio/mpeg">
@@ -84,10 +84,11 @@
     <form action="{{ url('/song/'.$song->id) }}" method="post" style="display:inline-block;">
         {{ csrf_field() }}
         {{ method_field('DELETE') }}
-                                    
+                                
         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this song?')">Archiver</button>
     </form>
-
+    @else  
+    <button type="submit" class="btn btn-sm btn-success">Archive</button>
 @endif
 
                             </td>

@@ -38,12 +38,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('dashboard')}}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
+
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
                                 <a href="{{route('home')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
                             </li>
+                            @if(Auth::user()->admin)
+                            <li class="w-100">
+                                <a href="{{route('dashboard')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">DASHBOARD</span>  </a>
+                            </li>
+                            @endif
                             <li>
                                 <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
                             </li>
@@ -69,7 +73,9 @@
 		
 	@foreach($play as $play)
 	@if(Auth::user()->id==$play->user_id)
-    @if($play->song->status!='archived')
+    @if(isset($play) && isset($play->song) && $play->song->status!='archived')
+   
+    
 	<div class="song col-md-12 col-lg-12 mb-12">
 	
 
@@ -92,7 +98,8 @@
       <a href="{{ url('/song/' . $play->song->id ) }}"id="play_btn"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
       </div>
     </div>
-	@endif
+	
+    @endif
     @endif
 	@endforeach
 

@@ -14,7 +14,12 @@
         </div>
     </div>
 
- 
+    <div class="row mb-3">
+            <label for="inputAudio" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="inputAudio" name="image">
+            </div>
+        </div>
 
     <div class="row mb-3">
         <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>

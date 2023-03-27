@@ -79,6 +79,7 @@
         <label for="inputCountry" class="col-sm-2 col-form-label">Artiste</label>
        
         <select class="col-sm-10" name="artist_id" id="artist_id" required>
+        <option value="6">Aucun</option>
         @foreach ($artists as $artist)
             <option value="{{ $artist->id }}">{{ $artist->name }}</option>
         @endforeach

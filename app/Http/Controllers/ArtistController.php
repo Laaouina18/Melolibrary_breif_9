@@ -103,13 +103,22 @@ return view('artist.show')->with('artist',$artist);
 {
     $artist = artist::find($id);
     $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'country' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'image' => 'nullable|string',
-        'birthday' => 'nullable|date',
+        "name" => "required|string|max:255",
+        "country" => "required|string|max:255",
+        "description" => "nullable|string",
+        "image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+        "birthday" => "nullable|date",
     ]);
-    $artist->fill($validatedData);
+   $artist->name= $validatedData["name"];
+   $artist->country= $validatedData["country"];
+   $artist->description= $validatedData["description"];
+   $artist->birthday= $validatedData["birthday"];
+   if ($request->hasFile('image')) {
+    $image= $request->file('image');
+    $filename = time().'.'.$image->getClientOriginalExtension();
+    $path = $image->storeAs('public/images', $filename);
+    $artist->image = $filename;
+}
     $artist->save();
 
     return redirect()->route('artist.index')->with('flash_message', 'Artiste modifié avec succès!');

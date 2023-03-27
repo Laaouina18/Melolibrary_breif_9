@@ -48,7 +48,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $genre->name }}</td>
-                            <td><img src="{{ asset('storage/images/'.$genre->image) }}" alt="{{ $genre->name }}" width="50"></td>
+                            <td><img src="{{ asset('storage/images/'.$genre->image) }}" alt="{{ $genre->name }}" width="30" ></td>
                             <td>{{ $genre->description }}</td>
                             <td style="display:flex;justify-content:space-around">
                                 <!-- <a href="{{ url('/genre/'.$genre->id) }}" class="btn btn-primary">Show</a> -->

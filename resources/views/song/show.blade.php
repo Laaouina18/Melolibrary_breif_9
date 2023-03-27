@@ -34,12 +34,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('dashboard')}}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
+
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
                                 <a href="{{route('home')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
                             </li>
+                            @if(Auth::user()->admin)
+                            <li class="w-100">
+                                <a href="{{route('dashboard')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">DASHBOARD</span>  </a>
+                            </li>
+                            @endif
                             <li>
                                 <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
                             </li>
@@ -84,7 +88,7 @@
            <form action="{{ route('playlist.add') }}" method="POST">
     @csrf
     <input type="hidden" name="song_id" value="{{ $song->id }}">
-    <button type="submit" class="class="btn btn-info"">Ajouter à la playlist</button>
+    <button type="submit" class="btn btn-info">Ajouter à la playlist</button>
 </form>
 
            <div class="buttons">
@@ -130,20 +134,20 @@
    
     <div class="comments">
         @foreach($song->comments as $comment)
-       
+       @if($comment->status!='archived')
         <div class="comment">
                 <h6 class="mb-0">{{$comment->user->name}}: {{$comment->body}}</h6>
                
                 <small>date:{{$comment->created_at}}</small>
             </div>
-    <form action="{{ url('/comments/'.$comment->id) }}" method="post" style="display:inline-block;">
+            <form action="{{ url('/comments/'.$comment->id) }}" method="post" style="display:inline-block;">
         {{ csrf_field() }}
         {{ method_field('DELETE') }}
-                                    
-        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this comment?')">Archiver</button>
+                                
+        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this Comment?')">Archiver</button>
     </form>
 
-            
+            @endif
         @endforeach
     </div>
 </div>

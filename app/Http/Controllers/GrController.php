@@ -102,15 +102,27 @@ return view('groupe.show')->with('groupe',$groupe);
      */
     public function update(Request $request, $id)
 {
+     
+
     $groupe = groupe::find($id);
     $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'pays' => 'required|string|max:255',
-      
-        'image' => 'nullable|string',
-        'date_creation' => 'nullable|date',
+        "name"=> "required|string|max:255",
+        "pays" => "required|string|max:255",
+        "description" => "nullable|string",
+        "image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+        "date_creation" => "nullable|date",
     ]);
-    $groupe->fill($validatedData);
+    $groupe->name = $validatedData["name"];
+    $groupe->description = $validatedData["description"];
+    $groupe->pays = $validatedData["pays"];
+    $groupe->date_creation = $validatedData["date_creation"];
+    if ($request->hasFile('image')) {
+        $image= $request->file('image');
+        $filename = time().'.'.$image->getClientOriginalExtension();
+        $path = $image->storeAs('public/images', $filename);
+        $groupe->image = $filename;
+    }
+   
     $groupe->save();
 
     return redirect()->route('groupe.index')->with('flash_message', 'groupe modifié avec succès!');
