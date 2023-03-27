@@ -58,7 +58,7 @@
                                 <form action="{{ url('/groupe/'.$genre->id) }}" method="post" style="display:inline-block;">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('vous voulez supprimer ce groupe?')">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('vous voulez supprimer ce groupe?')">supprimer</button>
                                 </form>
                             </td>
                         </tr>

@@ -56,7 +56,7 @@
                                 <form action="{{ url('/genre/'.$genre->id) }}" method="post" style="display:inline-block;">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this genre?')">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this genre?')">supprimer</button>
                                 </form>
                             </td>
                         </tr>

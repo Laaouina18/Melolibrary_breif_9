@@ -5,8 +5,8 @@
 <div class="container-fluid">
     <h1 class="mb-4">Modifier Chanson</h1>
     <form action="{{ url('song/'.$song->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PATCH')
+    {!! csrf_field() !!}
+    {{ method_field('PATCH') }}
 
         <div class="row mb-3">
             <label for="inputName" class="col-sm-2 col-form-label">Titre</label>
@@ -46,7 +46,7 @@
         <div class="row mb-3">
             <label for="inputLyrics" class="col-sm-2 col-form-label">Lyrics</label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="inputLyrics" name="lyrics" placeholder="Entrer les paroles">{{$song->lyrics }}</textarea>
+                <textarea class="form-control" id="inputLyrics" name="lyrics" value="{{$song->lyrics}}" placeholder="Entrer les paroles">{{$song->lyrics }}</textarea>
             </div>
         </div>
 
@@ -56,7 +56,12 @@
                 <input type="file" class="form-control" id="inputAudio" name="audio_path">
             </div>
         </div>
-
+        <div class="row mb-3">
+            <label for="inputAudio" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="inputAudio" name="image">
+            </div>
+        </div>
         <div class="row mb-3">
             <label for="inputGenre" class="col-sm-2 col-form-label">Genre</label>
           
@@ -80,7 +85,18 @@
     </select>
         
     </div>
-
+    <div class="row mb-3">
+            <label for="artist_id"  class="col-sm-2 col-form-label">Groupe</label>
+            <select name="groupe_id" id="artist_id" class="col-sm-10" >
+            <option value="1">Aucun</option>
+                @foreach ($groupes as $groupe)
+                @if($groupe->name!=NULL)
+              
+                <option value="{{ $groupe->id }}">{{ $groupe->name }}</option>
+                @endif
+                @endforeach
+            </select>
+        </div>
     <div class="row mb-3">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">

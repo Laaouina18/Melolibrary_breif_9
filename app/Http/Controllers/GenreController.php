@@ -98,21 +98,30 @@ return view('genre.show')->with('genre',$genre);
     /**
      * Update the specified resource in storage.
      */
+    
     public function update(Request $request, $id)
-{
-    $genre = genre::find($id);
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-   
-        'description' => 'nullable|string',
-        'image' => 'nullable|string'
-  
-    ]);
-    $genre->fill($validatedData);
-    $genre->save();
-
-    return redirect()->route('genre.index')->with('flash_message', 'genre modifié avec succès!');
-}
+    {
+        $genre = genre::find($id);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $genre->name = $validatedData['name'];
+        $genre->description = $validatedData['description'];
+     
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $path = $image->storeAs('public/images', $filename);
+            $genre->image = $filename;
+        }
+    
+        $genre->save();
+    
+        return redirect()->route('genre.index')->with('flash_message', 'genre modifié avec succès!');
+    }
 
     /**
      * Remove the specified resource from storage.

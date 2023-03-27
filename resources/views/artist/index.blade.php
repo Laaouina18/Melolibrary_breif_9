@@ -60,7 +60,7 @@
                         <form action="{{ url('/artist/'.$item->id) }}" method="post" class="d-inline-block">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
-                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Confirm delete?')">archiffer</button>
+                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Confirm delete?')">supprimer</button>
                         </form>
 <!-- 
                         <a href="{{ url('/artist/' . $item->id ) }}" class="btn btn-sm btn-secondary">Voir plus...</a> -->

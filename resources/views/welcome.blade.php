@@ -24,17 +24,17 @@
 		
 		<body>
     
-		<div class="container-fluid" style="  background: linear-gradient(to right,#434043, #1595be);">
+		<div class="container-fluid" style="  background: linear-gradient(to right,#434043, #B2EBF2);">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
                         <a href="{{route('play')}}" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="color:gray;">LISTE DE MUSIQUE</span>
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">LISTE DE MUSIQUE</span>
                         </a>
                     </li>
                     <li>
@@ -45,7 +45,7 @@
                                 <a href="{{route('home')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
                             </li>
                             <li>
-                                <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHERCHE</span>  </a>
+                                <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
                             </li>
                         </ul>
                     </li>
@@ -53,25 +53,7 @@
                    
                 </ul>
                 <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1" style="width:100%"> {{ Auth::user()->name }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                       
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li> <a class="dropdown-item" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a></li>
-                    </ul>
-                </div>
+            
             </div>
         </div>
         <div class="col py-12">
@@ -90,27 +72,20 @@
     @if($play->song->status!='archived')
 	<div class="song col-md-12 col-lg-12 mb-12">
 	
-    @if( empty($song->groupe))
-               <div class="img"> <img src="{{ asset('storage/images/'.$play->song->artist->image) }}" ></div>
-               @endif
-               @if($song->artist && $song->groupe)
-               <div class="img"> <img src="{{ asset('storage/images/'.$paly->song->artist->image) }}" ></div>
-               @endif
-               @if(empty($song->artist))
-               <div class="img"> <img src="{{ asset('storage/images/'.$play->song->groupe->image) }}" ></div>
-               @endif
-      
+
+    <div class="img"> <img src="{{ asset('storage/images/'.$play->song->image) }}" ></div>
+             
       <div class="more">
       <audio src="{{asset('images/1.jpg')}}" id="music"></audio>
       <div class="song_info">
          <p id="title">{{$play->song->title}}</p>
-         @if( empty($song->groupe))
+         @if( empty($song->groupe) && isset($play->song->groupe->name))
          <p>{{$play->song->artist->name}}</p>
          @endif
-         @if( empty($song->artist))
+         @if( empty($song->artist) && isset($song->groupe) )
          <p>{{$play->song->groupe->name}}</p>
          @endif
-         @if($song->artist && $song->groupe)
+         @if(isset($song->artist->name) && isset( $song->groupe->name))
          <p>{{$play->song->groupe->name}}&&{{$play->song->artist->name}}</p>
          @endif
       </div>

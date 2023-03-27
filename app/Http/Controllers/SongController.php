@@ -11,7 +11,7 @@ use App\Models\artist;
 use App\Models\genre;
 use App\Models\groupe;
 use App\Models\Commentaire;
-
+use Illuminate\Validation\Rule;
 
 class SongController extends Controller
 {
@@ -59,12 +59,14 @@ return view('auth.login');
             'year' => 'required|integer|min:1900',
             'track' => 'required|string|max:255',
             'audio_path' => 'nullable',
+            'image' => 'nullable',
             'filename' => 'required|string|max:255',
             'duration' => 'required',
             'genre_id' => 'required|exists:genre,id',
             'artist_id' => 'required|exists:artist,id',
             'groupe_id' => 'required|exists:groupe,id',
-            'lyrics' => 'required|string'
+            'lyrics' => 'required|string',
+           
         ]);
        
         $chanson = new Song();
@@ -84,7 +86,14 @@ return view('auth.login');
             $path = $audio_path->storeAs('public/audio', $filename);
             $chanson->audio_path = $filename;
         }
-  
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $path = $audio_path->storeAs('public/images', $filename);
+            $chanson->image = $image;
+        }
+       
+    
         $chanson->save();
     
         return redirect('song')->with('flash_message', 'Vous avez ajouté une chanson.');
@@ -150,26 +159,50 @@ $commentaires=Commentaire::all();
      */
     public function update(Request $request, $id)
 {
-    $song = song::find($id);
-    $genre=genre::all();
-    $artists=artist::all();
-    $groupes=groupe::all();
+    $chanson = Song::find($id);
     $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'year' => 'required|integer|min:1900',
-        'track' => 'required|string|max:255',
-        'audio_path' => 'nullable',
-        'filename' => 'required|string|max:255',
-        'duration' => 'required',
-        'genre_id' => 'required|exists:genre,id',
-        'artist_id' => 'required|exists:artist,id',
-        'groupe_id' => 'required|exists:groupe,id',
-        'lyrics' => 'required|string'
+        "title"=>"required|min:3|max:255",
+        "track"=>"required|min:3|max:255",
+        "genre_id" => "required|exists:genre,id",
+        "artist_id" => "required|exists:artist,id",
+        "groupe_id" => "required|exists:groupe,id",
+        "filename"=>"required" ,
+        "duration" => "required",          
+        "year"=>"required:numeric",
+        "audio_path"=>"required:mp3,mp4",
+        "image"=>"required",
+        "lyrics"=>"required"
     ]);
-    $song->fill($validatedData);
-    $song->save();
+
+    $chanson->title = $validatedData['title'];
+    $chanson->year = $validatedData['year'];
+    $chanson->track = $validatedData['track'];
+    $chanson->filename = $validatedData['filename'];
+    $chanson->duration = $validatedData['duration'];
+    $chanson->genre_id = $validatedData['genre_id'];
+    $chanson->artist_id = $validatedData['artist_id'];
+    $chanson->groupe_id = $validatedData['groupe_id'];
+    $chanson->lyrics = $validatedData['lyrics'];
+
+    if ($request->hasFile('audio_path')) {
+        $audio_path = $request->file('audio_path');
+        $filename = time().'.'.$audio_path->getClientOriginalExtension();
+        $path = $audio_path->storeAs('public/audio', $filename);
+        $chanson->audio_path = $filename;
+    }
+    if ($request->hasFile('image')) {
+        $image= $request->file('image');
+        $filename = time().'.'.$image->getClientOriginalExtension();
+        $path = $image->storeAs('public/images', $filename);
+        $chanson->image = $filename;
+    }
+
+    $chanson->save();
 
     return redirect()->route('song.index')->with('flash_message', 'chanson modifié avec succès!');
+ 
+
+
 }
 
     /**

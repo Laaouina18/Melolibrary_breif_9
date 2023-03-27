@@ -14,7 +14,7 @@ class Song extends Model
     protected $table = 'songs';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'title', 'year', 'track', 'audio_path', 'filename', 'duration', 'genre_id', 'artist_id','groupe_id','lyrics',
+        'title', 'year', 'track','image', 'audio_path', 'filename', 'duration', 'genre_id', 'artist_id','groupe_id','lyrics',
     ];
 
     public function genre()

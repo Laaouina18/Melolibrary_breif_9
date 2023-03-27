@@ -27,11 +27,11 @@
             <textarea class="form-control" id="inputDescription" name="description" rows="3" placeholder="Enter artist description">{{ $artist->description }}</textarea>
         </div>
     </div>
-
+   
     <div class="row mb-3">
         <label for="inputImage" class="col-sm-2 col-form-label">Image</label>
         <div class="col-sm-10">
-            <input type="file" class="form-control" id="inputImage" name="image">
+        <input type="file" class="form-control-file" id="image" name="image">
         </div>
     </div>
 

@@ -25,7 +25,10 @@
             <label for="audio_path" class="form-label">Audio Path</label>
             <input type="file" name="audio_path" id="audio" class="form-control" required>
         </div>
-
+        <div class="mb-3">
+            <label for="audio_path" class="form-label">Image</label>
+            <input type="file" name="image" id="image" class="form-control" required>
+        </div>
         <div class="mb-3">
             <label for="filename" class="form-label">Filename</label>
             <input type="text" name="filename" id="filename" class="form-control" required maxlength="255">

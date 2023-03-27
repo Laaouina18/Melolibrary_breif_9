@@ -60,17 +60,17 @@
           <td>{{ $song->title }}</td>
           @if($song->groupe && empty($song->artist))
   <td>{{ $song->groupe->name }}</td>
-  <td><img src="{{ asset('storage/images/'.$song->groupe->image) }}" alt="{{ $song->name }}" width="50"></td>
+
 @endif
 @if($song->artist && empty($song->groupe))
   <td>{{ $song->artist->name }}</td>
-  <td><img src="{{ asset('storage/images/'.$song->artist->image) }}" alt="{{ $song->name }}" width="50"></td>
+
 @endif
 @if($song->artist && $song->groupe)
   <td>{{ $song->artist->name }} && {{ $song->groupe->name }}</td>
-  <td><img src="{{ asset('storage/images/'.$song->artist->image) }}" alt="{{ $song->name }}" width="50"></td>
-@endif
 
+@endif
+<td><img src="{{ asset('storage/images/'.$song->image) }}" alt="{{ $song->name }}" width="50"></td>
           <!-- <td>
             <audio controls>
               <audio src="{{ asset('storage/'.$song->audio_path) }}" type="audio/mpeg">
@@ -87,12 +87,6 @@
                                     
         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this song?')">Archiver</button>
     </form>
-@else
-<form action="{{ route('song.unarchive', $song->id) }}" method="post" style="display:inline-block;">
-{!! csrf_field() !!}
-    {{ method_field('POST') }}               
-    <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to unarchive this song?')">Désarchiver</button>
-</form>
 
 @endif
 

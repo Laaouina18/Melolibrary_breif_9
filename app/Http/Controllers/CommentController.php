@@ -111,6 +111,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+   
     public function destroy($id){
         if(auth()->user()){
         $comment = commentaire::find($id);
