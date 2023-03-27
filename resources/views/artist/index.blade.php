@@ -18,6 +18,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('genre')}}">Genres</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{url('groupe')}}">Groupes</a>
+                        </li>
                     </ul>
                 </div>
                
@@ -32,6 +35,8 @@
                     <th>#</th>
                     <!-- <th>Image</th> -->
                     <th>Name</th>
+                    <th>Image</th>
+                    
                     <th>Description</th>
                     <th>Birthday</th>
                     <th>Action</th>
@@ -39,12 +44,14 @@
             </thead>
             <tbody>
                 @foreach($artist as $item)
+                @if($item->name!=NULL)
                 <tr>
                     <td>{{ $item->id }}</td>
                     <!-- <td>
                     <img class="card-img-top" src="{{ asset('storage/images/'.$item->image) }}" alt="{{$item->name }}" style="width:5%">
                     </td> -->
                     <td>{{ $item->name }}</td>
+                    <td><img src="{{ asset('storage/images/'.$item->image) }}" alt="{{ $item->name }}" width="50"></td>
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->birthday }}</td>
                     <td style="display:flex;justify-content:space-around">
@@ -59,6 +66,7 @@
                         <a href="{{ url('/artist/' . $item->id ) }}" class="btn btn-sm btn-secondary">Voir plus...</a> -->
                     </td>
                 </tr>
+                @endif
                 @endforeach
                         </tbody>
     </table>

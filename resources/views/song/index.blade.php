@@ -23,6 +23,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('genre')}}">Genres</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{url('groupe')}}">Groupes</a>
+                        </li>
                     </ul>
                 </div>
                
@@ -39,7 +42,9 @@
                         <tr>
         <th scope="col">#</th>
           <th scope="col">Titre</th>
+         
           <th scope="col">Artiste</th>
+          <th scope="col">Image</th>
           <!-- <th scope="col">Audio</th> -->
           <!-- <th scope="col">Ajouter à la liste de lecture</th> -->
           <th scope="col">Action
@@ -49,10 +54,23 @@
       </thead>
       <tbody>
         @foreach($song as $song)
+    
         <tr>
         <td>{{ $loop->iteration }}</td>
           <td>{{ $song->title }}</td>
-          <td>{{ $song->artist->name }}</td>
+          @if($song->groupe && empty($song->artist))
+  <td>{{ $song->groupe->name }}</td>
+  <td><img src="{{ asset('storage/images/'.$song->groupe->image) }}" alt="{{ $song->name }}" width="50"></td>
+@endif
+@if($song->artist && empty($song->groupe))
+  <td>{{ $song->artist->name }}</td>
+  <td><img src="{{ asset('storage/images/'.$song->artist->image) }}" alt="{{ $song->name }}" width="50"></td>
+@endif
+@if($song->artist && $song->groupe)
+  <td>{{ $song->artist->name }} && {{ $song->groupe->name }}</td>
+  <td><img src="{{ asset('storage/images/'.$song->artist->image) }}" alt="{{ $song->name }}" width="50"></td>
+@endif
+
           <!-- <td>
             <audio controls>
               <audio src="{{ asset('storage/'.$song->audio_path) }}" type="audio/mpeg">
@@ -71,8 +89,8 @@
     </form>
 @else
 <form action="{{ route('song.unarchive', $song->id) }}" method="post" style="display:inline-block;">
-    @csrf
-    @method('POST')                
+{!! csrf_field() !!}
+    {{ method_field('POST') }}               
     <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to unarchive this song?')">Désarchiver</button>
 </form>
 
@@ -81,6 +99,7 @@
                             </td>
           <!-- <td><a  class="btn btn-secondary">Voir plus</a></td> -->
         </tr>
+     
         @endforeach
                         </tbody>
     </table>

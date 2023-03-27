@@ -16,8 +16,12 @@ class GrController extends Controller
      */
     public function index()
     { 
+        if(auth()->user()){
         $groupe=groupe::all();
-        return view('groupe.index')->with('groupe',$groupe);
+        return view('groupe.index')->with('groupe',$groupe);}
+        else{
+            return view('auth.login');
+        }
     
     }
 
@@ -27,7 +31,11 @@ class GrController extends Controller
      */
     public function create()
     {
-        return view('groupe.create');
+        if(auth()->user()){
+        return view('groupe.create');}
+        else{
+            return view('auth.login');
+        }
 
     }
 
@@ -37,10 +45,33 @@ class GrController extends Controller
     public function store(Request $request)
     {
 
-        $input = $request->except('_token');
-        groupe::create($input);
-        return redirect('groupe')->with('flash_message', 'vous avez ajouté un groupe');
-       
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'pays' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'date_creation' => 'nullable|date',
+        ]);
+    
+        $artist = new groupe;
+        $artist->name = $validatedData['name'];
+        $artist->pays = $validatedData['pays'];
+        $artist->description = $validatedData['description'];
+        $artist->date_creation = $validatedData['date_creation'];
+    
+    
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $path = $image->storeAs('public/images', $filename);
+            $artist->image = $filename;
+        }
+    
+        $artist->save();
+    
+    
+    
+            return redirect('groupe')->with('flash_message', 'vous avez ajouté un groupe');
     }
 
     /**
@@ -58,9 +89,12 @@ return view('groupe.show')->with('groupe',$groupe);
      */
     public function edit($id)
     {
+        if(auth()->user()){
         $groupe=groupe::find($id);
         return view('groupe.edit')->with('groupe',$groupe);
-        
+        }else{
+            return view('auth.login');
+        }
     }
 
     /**
@@ -86,9 +120,12 @@ return view('groupe.show')->with('groupe',$groupe);
      * Remove the specified resource from storage.
      */
     public function destroy($id){
-
+        if(auth()->user()){
         groupe::destroy($id);
-       return redirect('groupe')->with('flash_message','groupe supprimé');
+       return redirect('groupe')->with('flash_message','groupe supprimé');}
+       else{
+        return view('auth.login');
+       }
     }
         
     }

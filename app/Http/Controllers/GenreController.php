@@ -15,9 +15,12 @@ class GenreController extends Controller
      * @return\Illuminate\Http\response.
      */
     public function index()
-    { 
+    {  if(auth()->user()){
         $genre=genre::all();
-        return view('genre.index')->with('genre',$genre);
+        return view('genre.index')->with('genre',$genre);}
+        else{
+            return view('auth.login');
+        }
     
     }
 
@@ -27,7 +30,11 @@ class GenreController extends Controller
      */
     public function create()
     {
-        return view('genre.create');
+        if(auth()->user()){
+        return view('genre.create');}
+        else{
+            return view('auth.login');
+        }
 
     }
 
@@ -36,13 +43,34 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-
-        $input = $request->except('_token');
-        genre::create($input);
-        return redirect('genre')->with('flash_message', 'vous avez ajouté un genre');
-       
+        
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+          
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+          
+        ]);
+    
+        $artist = new genre;
+        $artist->name = $validatedData['name'];
+        
+        $artist->description = $validatedData['description'];
+     
+    
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $path = $image->storeAs('public/images', $filename);
+            $artist->image = $filename;
+        }
+    
+        $artist->save();
+    
+    
+    
+            return redirect('genre')->with('flash_message', 'vous avez ajouté un genre');
     }
-
     /**
      * Display the specified resource.
      */
@@ -58,8 +86,12 @@ return view('genre.show')->with('genre',$genre);
      */
     public function edit($id)
     {
+        if(auth()->user()){
         $genre=genre::find($id);
-        return view('genre.edit')->with('genre',$genre);
+        return view('genre.edit')->with('genre',$genre);}
+        else{
+            return view('auth.login');
+        }
         
     }
 
@@ -86,8 +118,9 @@ return view('genre.show')->with('genre',$genre);
      * Remove the specified resource from storage.
      */
     public function destroy($id){
-
+        if(auth()->user()){
         genre::destroy($id);
-       return redirect('genre')->with('flash_message','genre supprimé');
+       return redirect('genre')->with('flash_message','genre supprimé');}
+       return view('auth.login');
     }
 }

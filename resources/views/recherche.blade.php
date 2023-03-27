@@ -9,19 +9,19 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
+                        <a href="{{route('play')}}" class="nav-link align-middle px-0">
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">LISTE DE MUSIQUE</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Dashboard</span> </a>
+                        <a href="{{route('home')}}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline" style="color:white;">Music</span> </a>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">ARTISTES</span>  </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
+                                <a href="{{route('search')}}" class="nav-link px-0"> <span class="d-none d-sm-inline" style="color:white;">RECHRCHE</span>  </a>
                             </li>
                         </ul>
                     </li>
@@ -29,21 +29,7 @@
                    
                 </ul>
                 <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">loser</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div>
+               
             </div>
         </div>
         <div class="col py-3">
@@ -64,20 +50,125 @@
             <div class="row">
                 @foreach($songs as $song)
                 @if($song->status!='archived')
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" src="{{ asset('storage/images/'.$song->artist->image) }}" alt="{{ $song->title }}">
-                            <div class="card-body">
-                                <p class="card-text">{{ $song->title }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="{{ route('search', $song) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-4 col-lg-4 mb-4">
+            <a href="{{ url('/song/' . $song->id ) }}" style="text-decoration: none;">
+                <div class="card">
+                @if(empty($song->groupe) && $song->artist)
+                    <img src="{{ asset('storage/images/'.$song->artist->image) }}" class="card-img-top" alt="{{ $song->title }}">
                     @endif
+                    @if(empty($song->artist) && isset($song->groupe))
+                    <img src="{{ asset('storage/images/'.$song->groupe->image) }}" class="card-img-top" alt="{{ $song->title }}">
+                    @endif
+                    @if(isset($song->artist) && isset($song->groupe))
+                    <img src="{{ asset('storage/images/'.$song->groupe->image) }}" class="card-img-top" alt="{{ $song->title }}">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title" style="color:black">{{ $song->title }}</h5>
+                        @if(empty($song->groupe)&& $song->artist)
+                        <p class="card-text" style="color:black">{{ $song->artist->name }}</p>
+                  @endif
+                  @if(isset($song->artist) && isset($song->groupe))
+                  <p class="card-text" style="color:black">{{ $song->artist->name }}&& {{ $song->groupe->name }}</p>
+                  @endif
+                    <div class="buttons">
+               <div class="random-track" onclick="randomTrack()">
+                   <i class="fas fa-random fa-2x" title="random"></i>
+               </div>
+               <div class="prev-track" onclick="prevTrack()">
+                    <i class="fa fa-step-backward fa-2x"></i>
+                </div>
+                <div class="playpause-track" >
+                    <i class="fa fa-play-circle fa-5x" onclick="playTrack()"></i>
+                </div>
+                <audio id="myAudio">
+  <source src="{{ asset('storage/audio/'.$song->audio_path) }}" type="audio/mpeg">
+</audio>
+                <div class="next-track" >
+                    <i class="fa fa-step-forward fa-2x"></i>
+                </div>
+                <div class="repeat-track" >
+                    <i class="fa fa-repeat fa-2x" title="repeat"></i>
+                </div>
+           </div>
+                        <form action="{{ route('playlist.add') }}" method="POST">
+    @csrf
+    <input type="hidden" name="song_id" value="{{ $song->id }}">
+    <button type="submit" class="btn btn-info">Ajouter à la playlist</button>
+</form>
+                    </div>
+                </div>   </a>
+            </div>
+                    @endif
+                @endforeach
+                @foreach($chanson as $c)
+                @foreach($artists as $artist)
+                @if( isset( $c->artist->name))
+                @if($c->artist->name=$artist->name)
+                @if($c->status!='archived')
+                <div class="col-md-4 col-lg-4 mb-4">
+            <a href="{{ url('/song/' . $c->id ) }}" style="text-decoration: none;">
+                <div class="card">
+              
+                    <img src="{{ asset('storage/images/'.$c->artist->image) }}" class="card-img-top" alt="{{ $c->title }}">
+                  
+                    <div class="card-body">
+                        <h5 class="card-title" style="color:black">{{ $c->title }}</h5>
+                       
+                        @if(empty($c->groupe))
+                        <p class="card-text" style="color:black">{{ $c->artist->name }}</p>
+                  @endif
+                  @if( isset($c->groupe))
+                  <p class="card-text" style="color:black">{{ $c->artist->name }}&& {{ $c->groupe->name }}</p>
+                  @endif
+                        <form action="{{ route('playlist.add') }}" method="POST">
+    @csrf
+    <input type="hidden" name="song_id" value="{{ $c->id }}">
+    <button type="submit" class="btn btn-info">Ajouter à la playlist</button>
+</form>
+                    </div>
+                </div>   </a>
+            </div>
+                    @endif
+                    @endif
+                    @endif
+                @endforeach
+                @endforeach
+                @foreach($chanson as $c)
+                @foreach($genres as $genre)
+                @if($c->genre->name=$genre->name)
+                @if($c->status!='archived')
+                <div class="col-md-4 col-lg-4 mb-4">
+            <a href="{{ url('/song/' . $c->id ) }}" style="text-decoration: none;">
+                <div class="card">
+                @if(empty($c->groupe)&& isset($c->artist))
+                    <img src="{{ asset('storage/images/'.$c->artist->image) }}" class="card-img-top" alt="{{ $c->title }}">
+                    @endif
+                  
+                    @if(empty($c->artist) && isset($c->groupe))
+                    <img src="{{ asset('storage/images/'.$c->groupe->image) }}" class="card-img-top" alt="{{ $c->title }}">
+                    @endif
+                    @if(isset($c->artist) && isset($c->groupe))
+                    <img src="{{ asset('storage/images/'.$c->groupe->image) }}" class="card-img-top" alt="{{ $c->title }}">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title" style="color:black">{{ $c->title }}</h5>
+                        @if(empty($c->groupe)&& isset($c->artist))
+                        <p class="card-text" style="color:black">{{ $c->artist->name }}</p>
+                  @endif
+                  @if(isset($c->artist) && isset($c->groupe))
+                  <p class="card-text" style="color:black">{{ $c->artist->name }}&& {{ $c->groupe->name }}</p>
+                  @endif
+                        <form action="{{ route('playlist.add') }}" method="POST">
+    @csrf
+    <input type="hidden" name="song_id" value="{{ $c->id }}">
+    <button type="submit" class="btn btn-info">Ajouter à la playlist</button>
+</form>
+                    </div>
+                </div>   </a>
+            </div>
+                    @endif
+                    @endif
+                @endforeach
                 @endforeach
             </div>
        

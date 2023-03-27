@@ -55,11 +55,27 @@
             <div class="col-md-4 col-lg-4 mb-4">
             <a href="{{ url('/song/' . $song->id ) }}" style="text-decoration: none;">
                 <div class="card">
+                @if( empty($song->groupe))
                     <img src="{{ asset('storage/images/'.$song->artist->image) }}" class="card-img-top" alt="{{ $song->title }}">
+                    @endif
+                    @if( empty($song->artist))
+                    <img src="{{ asset('storage/images/'.$song->groupe->image) }}" class="card-img-top" alt="{{ $song->title }}">
+                    @endif
+                    @if($song->artist && $song->groupe)
+                    <img src="{{ asset('storage/images/'.$song->groupe->image) }}" class="card-img-top" alt="{{ $song->title }}">
+                    @endif
                     <div class="card-body">
                         <h5 class="card-title" style="color:black">{{ $song->title }}</h5>
-                        <p class="card-text" style="color:black">{{ $song->artist->name }}</p>
-                  
+                      
+                        @if( empty($song->groupe))
+         <p class="card-text" style="color:black">{{$song->artist->name}}</p>
+         @endif
+         @if( empty($song->artist))
+         <p class="card-text" style="color:black">{{$song->groupe->name}}</p>
+         @endif
+         @if($song->artist && $song->groupe)
+         <p class="card-text" style="color:black">{{$song->groupe->name}}&&{{$song->artist->name}}</p>
+         @endif
                         <form action="{{ route('playlist.add') }}" method="POST">
     @csrf
     <input type="hidden" name="song_id" value="{{ $song->id }}">

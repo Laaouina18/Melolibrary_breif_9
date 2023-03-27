@@ -16,9 +16,17 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $songs = Song::all();
-        $commentaires = Commentaire::all();
-        return view('song.show', compact('songs', 'commentaires'));
+        if(auth()->user()){
+            $comment = commentaire::find($id);
+            $comment->status = 'archived';
+            $comment->save();
+            return back();}
+            else{
+                return view('auth.login');
+            }
+        // $songs = Song::all();
+        // $commentaires = Commentaire::all();
+        // return view('song.show', compact('songs', 'commentaires'));
     }
 
     /**
@@ -103,9 +111,14 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        Commentaire::destroy($id);
-        return redirect()->back()->with('success', 'Commentaire supprimé avec succès!');
+    public function destroy($id){
+        if(auth()->user()){
+        $comment = commentaire::find($id);
+        $comment->status = 'archived';
+        $comment->save();
+        return back();}
+        else{
+            return view('auth.login');
+        }
     }
 }

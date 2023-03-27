@@ -9,6 +9,7 @@ use Illuminate\Validation\Validator;
 use App\Models\Song;
 use App\Models\artist;
 use App\Models\genre;
+use App\Models\groupe;
 use App\Models\Commentaire;
 
 
@@ -20,8 +21,13 @@ class SongController extends Controller
      */
     public function index()
     { 
+        if(auth()->user()){
+        
         $songt=Song::all();
-        return view('song.index')->with('song',$songt);
+        return view('song.index')->with('song',$songt);}
+        else{
+            return view('auth.login');
+        }
     
     }
 
@@ -31,10 +37,14 @@ class SongController extends Controller
      */
     public function create()
     {
-       
+        if(auth()->user()){
         $genre = genre::all();
         $artists = Artist::all();
-        return view('song.create', compact('genre', 'artists'));
+        $groupes = groupe::all();
+        return view('song.create', compact('genre', 'artists','groupes'));}
+        else{
+return view('auth.login');
+        }
 
     }
 
@@ -53,6 +63,7 @@ class SongController extends Controller
             'duration' => 'required',
             'genre_id' => 'required|exists:genre,id',
             'artist_id' => 'required|exists:artist,id',
+            'groupe_id' => 'required|exists:groupe,id',
             'lyrics' => 'required|string'
         ]);
        
@@ -64,6 +75,7 @@ class SongController extends Controller
         $chanson->duration = $validatedData['duration'];
         $chanson->genre_id = $validatedData['genre_id'];
         $chanson->artist_id = $validatedData['artist_id'];
+        $chanson->groupe_id = $validatedData['groupe_id'];
         $chanson->lyrics = $validatedData['lyrics'];
     
         if ($request->hasFile('audio_path')) {
@@ -99,24 +111,37 @@ $commentaires=Commentaire::all();
     
     public function edit($id)
     {
+        if(auth()->user()){
         $song=song::find($id);
         $genre = genre::all();
         $artists = Artist::all();
-        return view('song.edit', compact('genre', 'artists','song'));
+        $groupes= groupe::all();
+        return view('song.edit', compact('genre', 'artists','song','groupes'));}
+        else{
+            return view('auth.login');
+        }
 
         
     }
     public function destroy($id){
+        if(auth()->user()){
         $song = song::find($id);
         $song->status = 'archived';
         $song->save();
-        return redirect('song')->with('flash_message', 'Song archived');
+        return redirect('song')->with('flash_message', 'Song archived');}
+        else{
+            return view('auth.login');
+        }
     }
     public function unarchive($id){
+        if(auth()->user()){
         $song = Song::find($id);
         $song->status = 'active';
         $song->save();
-        return redirect()->back()->with('flash_message', 'Song unarchived');
+        return redirect()->back()->with('flash_message', 'Song unarchived');}
+        else{
+            return view ('auth.login');
+        }
     }
     
 
@@ -128,6 +153,7 @@ $commentaires=Commentaire::all();
     $song = song::find($id);
     $genre=genre::all();
     $artists=artist::all();
+    $groupes=groupe::all();
     $validatedData = $request->validate([
         'title' => 'required|string|max:255',
         'year' => 'required|integer|min:1900',
@@ -137,12 +163,13 @@ $commentaires=Commentaire::all();
         'duration' => 'required',
         'genre_id' => 'required|exists:genre,id',
         'artist_id' => 'required|exists:artist,id',
+        'groupe_id' => 'required|exists:groupe,id',
         'lyrics' => 'required|string'
     ]);
     $song->fill($validatedData);
     $song->save();
 
-    return redirect()->route('song.index')->with('flash_message', 'Artiste modifié avec succès!');
+    return redirect()->route('song.index')->with('flash_message', 'chanson modifié avec succès!');
 }
 
     /**

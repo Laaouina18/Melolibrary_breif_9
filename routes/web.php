@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\GrController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 /*
@@ -50,9 +51,10 @@ Route::post('/song/{id}/unarchive', 'SongController@unarchive')->name('song.unar
 
 Route::post('/songs/{song}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments');
 
-
 // Route::resource('/welcome',HomeController::class);
 Route::resource('/',HomeController::class);
 Route::resource('/artist',ArtistController::class);
 Route::resource('/song',SongController::class);
 Route::resource('/genre',GenreController::class);
+Route::resource('/groupe',GrController::class);
+Route::get('/comments/{id}',[CommentController::class,'destory']);

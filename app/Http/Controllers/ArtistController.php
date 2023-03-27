@@ -16,8 +16,12 @@ class ArtistController extends Controller
      */
     public function index()
     { 
+        if(auth()->user()){
         $artist=artist::all();
-        return view('artist.index')->with('artist',$artist);
+        return view('artist.index')->with('artist',$artist);}
+        else{
+            return('auth.login');
+        }
     
     }
 
@@ -27,8 +31,11 @@ class ArtistController extends Controller
      */
     public function create()
     {
+        if(auth()->user()){
         return view('artist.create');
-
+        }else{
+            return view ("auth.login");
+        }
     }
 
     /**
@@ -80,8 +87,12 @@ return view('artist.show')->with('artist',$artist);
      */
     public function edit($id)
     {
+        if(auth()->user()){
         $artist=artist::find($id);
-        return view('artist.edit')->with('artist',$artist);
+        return view('artist.edit')->with('artist',$artist);}
+        else{
+            return view('auth.login');
+        }
         
     }
 
@@ -108,9 +119,12 @@ return view('artist.show')->with('artist',$artist);
      * Remove the specified resource from storage.
      */
     public function destroy($id){
-
+        if(auth()->user()){
         artist::destroy($id);
-       return redirect('artist')->with('flash_message','artiste supprimé');
+       return redirect('artist')->with('flash_message','artiste supprimé');}
+       else{
+        return view('auth.login');
+       }
     }
         
     }

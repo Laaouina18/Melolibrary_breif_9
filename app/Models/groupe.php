@@ -12,4 +12,8 @@ class groupe extends Model
 protected  $table='groupe';
 protected $primarykey='id' ;
 protected $fillable = ['name', 'image', 'pays', 'date_creation', '_token'];
+public function songs()
+{
+    return $this->hasMany(Song::class);
+}
 }

@@ -21,12 +21,14 @@ return new class extends Migration
             $table->time("duration");
             $table->unsignedBigInteger("genre_id");
             $table->unsignedBigInteger("artist_id");
+            $table->unsignedBigInteger("groupe_id");
             $table->text("lyrics");
             $table->string("cover");
             $table->timestamps();
 
             $table->foreign('genre_id')->references('id')->on('genre');
             $table->foreign('artist_id')->references('id')->on('artist');
+            $table->foreign('groupe_id')->references('id')->on('groupe');
         });
     }
 

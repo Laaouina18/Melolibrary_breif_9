@@ -73,11 +73,25 @@
    <div class="player">
        <div class="wrapper">
            <div class="details">
-              
+           @if( empty($song->groupe))
                <div class="track-art" style="background-image:url('{{ asset('storage/images/'.$song->artist->image) }}');" ></div>
-
+               @endif
+               @if($song->artist && $song->groupe)
+               <div class="track-art" style="background-image:url('{{ asset('storage/images/'.$song->artist->image) }}');" ></div>
+               @endif
+               @if(empty($song->artist))
+               <div class="track-art" style="background-image:url('{{ asset('storage/images/'.$song->groupe->image) }}');" ></div>
+               @endif
                <div class="track-name">{{$song->title}}</div>
+               @if($song->artist && empty($song->groupe))
                <div class="track-artist">{{$song->artist->name}}</div>
+               @endif
+               @if($song->artist && empty($song->groupe))
+               <div class="track-artist">{{$song->groupe->name}}</div>
+               @endif
+               @if($song->artist && $song->groupe)
+               <div class="track-artist">{{$song->groupe->name}}&&{{$song->artist->name}}<</div>
+               @endif
            </div>
 
            <div class="slider_container">
@@ -129,17 +143,27 @@
         <button type="submit" class="btn btn-info">Commenter</button>
 </div>
     </form>
+    
 
     <hr>
 
    
     <div class="comments">
         @foreach($song->comments as $comment)
-            <div class="comment">
+       
+        <div class="comment">
                 <h6 class="mb-0">{{$comment->user->name}}: {{$comment->body}}</h6>
                
                 <small>date:{{$comment->created_at}}</small>
             </div>
+    <form action="{{ url('/comments/'.$comment->id) }}" method="post" style="display:inline-block;">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+                                    
+        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this comment?')">Archiver</button>
+    </form>
+
+            
         @endforeach
     </div>
 </div>

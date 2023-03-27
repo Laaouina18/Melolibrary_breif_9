@@ -20,7 +20,7 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-     
+        $chanson=Song::all();
         
      $query=$request->input('query');
 
@@ -28,6 +28,6 @@ class SearchController extends Controller
       $artists = Artist::where('name', 'LIKE', "%$query%")->get();
       $genres = Genre::where('name', 'LIKE', "%$query%")->get();
    
-        return view('recherche', compact('songs', 'artists', 'genres'));
+        return view('recherche', compact('songs', 'artists', 'genres','chanson'));
     }
 }

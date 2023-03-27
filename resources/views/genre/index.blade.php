@@ -20,6 +20,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="{{url('genre')}}">Genres</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{url('groupe')}}">Groupes</a>
+                        </li>
                     </ul>
                 </div>
                

@@ -1,37 +1,40 @@
-@extends('layout')
+@extends('layouts.app')
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
-<div>
-    <h1>ajouter un artist</h1>
-<form action="{{url('groupe')}}" method="post">
-    {!!csrf_field()!!}
-  <div class="form-group">
-    <label for="exampleFormControlInput1">name</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" name="name" placeholder="....">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">country</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" name="pays" placeholder="....">
-  </div>
- 
-  <div class="form-group">
-    <label for="exampleFormControlInput1">image</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" name="image" placeholder="....">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" name="image" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-  <label for="start" >Start date:</label>
+<div class="container">
+<h1 class="mb-4">Ajouter un groupe</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+     
+      <form action="{{url('groupe')}}" method="post" enctype="multipart/form-data">
+        {!!csrf_field()!!}
+        <div class="mb-3">
+          <label for="name" class="form-label">Nom</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Entrez le nom du genre">
+        </div>
+        <div class="form-group">
+            <label for="country">Pays</label>
+            <input type="text" class="form-control" id="country" name="pays" placeholder="Pays d'origine">
+        </div>
+        <div class="form-group">
+            <label for="birthday">Date de création</label>
+            <input type="date" class="form-control" id="pays" name="date_creation">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+        <div class="mb-3">
 
-<input type="date" id="start" name="date_creation"
-       value="2018-07-22"
-       min="2018-01-01" max="2018-12-31">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="description" name="description" placeholder="Entrez une description du genre">
+        </div>
+       
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </form>
+    </div>
   </div>
-  <button class="btn " >save</buttn>
-</form>
 </div>
 @endsection

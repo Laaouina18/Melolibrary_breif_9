@@ -7,7 +7,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h1 class="mb-4">Ajouter un genre</h1>
-      <form action="{{url('genre')}}" method="post">
+      <form action="{{url('genre')}}" method="post" enctype="multipart/form-data">
         {!!csrf_field()!!}
         <div class="mb-3">
           <label for="name" class="form-label">Nom</label>
@@ -16,6 +16,10 @@
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
           <input type="text" class="form-control" id="description" name="description" placeholder="Entrez une description du genre">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
         </div>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
       </form>

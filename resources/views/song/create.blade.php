@@ -47,13 +47,28 @@
 
         <div class="mb-3">
             <label for="artist_id" class="form-label">Artist</label>
-            <select name="artist_id" id="artist_id" class="form-control" required>
+            <select name="artist_id" id="artist_id" class="form-control" >
+            <option value="3">Aucun</option>
                 @foreach ($artists as $artist)
+                @if($artist->name!=NULL)
+                
                 <option value="{{ $artist->id }}">{{ $artist->name }}</option>
+@endif
                 @endforeach
             </select>
         </div>
-
+        <div class="mb-3">
+            <label for="artist_id" class="form-label">Groupe</label>
+            <select name="groupe_id" id="artist_id" class="form-control" >
+            <option value="1">Aucun</option>
+                @foreach ($groupes as $groupe)
+                @if($groupe->name!=NULL)
+              
+                <option value="{{ $groupe->id }}">{{ $groupe->name }}</option>
+                @endif
+                @endforeach
+            </select>
+        </div>
         <div class="mb-3">
             <label for="lyrics" class="form-label">Lyrics</label>
             <textarea name="lyrics" id="lyrics" class="form-control" required></textarea>

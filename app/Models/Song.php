@@ -14,7 +14,7 @@ class Song extends Model
     protected $table = 'songs';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'title', 'year', 'track', 'audio_path', 'filename', 'duration', 'genre_id', 'artist_id', 'lyrics',
+        'title', 'year', 'track', 'audio_path', 'filename', 'duration', 'genre_id', 'artist_id','groupe_id','lyrics',
     ];
 
     public function genre()
@@ -26,7 +26,10 @@ class Song extends Model
     {
         return $this->belongsTo(Artist::class);
     }
-
+    public function groupe()
+    {
+        return $this->belongsTo(groupe::class);
+    }
     public function comments()
     {
         return $this->hasMany(Commentaire::class);

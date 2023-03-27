@@ -90,14 +90,29 @@
     @if($play->song->status!='archived')
 	<div class="song col-md-12 col-lg-12 mb-12">
 	
-      <div class="img">
-      <img src="{{ asset('storage/images/'.$play->song->artist->image) }}"/>
-      </div>
+    @if( empty($song->groupe))
+               <div class="img"> <img src="{{ asset('storage/images/'.$play->song->artist->image) }}" ></div>
+               @endif
+               @if($song->artist && $song->groupe)
+               <div class="img"> <img src="{{ asset('storage/images/'.$paly->song->artist->image) }}" ></div>
+               @endif
+               @if(empty($song->artist))
+               <div class="img"> <img src="{{ asset('storage/images/'.$play->song->groupe->image) }}" ></div>
+               @endif
+      
       <div class="more">
       <audio src="{{asset('images/1.jpg')}}" id="music"></audio>
       <div class="song_info">
          <p id="title">{{$play->song->title}}</p>
+         @if( empty($song->groupe))
          <p>{{$play->song->artist->name}}</p>
+         @endif
+         @if( empty($song->artist))
+         <p>{{$play->song->groupe->name}}</p>
+         @endif
+         @if($song->artist && $song->groupe)
+         <p>{{$play->song->groupe->name}}&&{{$play->song->artist->name}}</p>
+         @endif
       </div>
       <a href="{{ url('/song/' . $play->song->id ) }}"id="play_btn"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
       </div>
