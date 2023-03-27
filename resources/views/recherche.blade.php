@@ -58,7 +58,7 @@
             <a href="{{ url('/song/' . $song->id ) }}" style="text-decoration: none;">
                 <div class="card">
                
-                    <img src="{{ asset('storage/images/'.$song->image) }}" class="card-img-top" alt="{{ $song->title }}">
+                    <img src="{{ asset('storage/images/'.$song->image) }}" class="card-img-top" alt="{{ $song->title }}" style="width:100%;height:50vh">
                    
                    
                     <div class="card-body">
@@ -108,7 +108,7 @@
             <a href="{{ url('/song/' . $c->id ) }}" style="text-decoration: none;">
                 <div class="card">
               
-                    <img src="{{ asset('storage/images/'.$c->image) }}" class="card-img-top" alt="{{ $c->title }}">
+                    <img src="{{ asset('storage/images/'.$c->image) }}" class="card-img-top" alt="{{ $c->title }}" style="width:100%;height:50vh">
                   
                     <div class="card-body">
                         <h5 class="card-title" style="color:black">{{ $c->title }}</h5>
@@ -140,7 +140,7 @@
             <a href="{{ url('/song/' . $c->id ) }}" style="text-decoration: none;">
                 <div class="card">
                
-                    <img src="{{ asset('storage/images/'.$c->image) }}" class="card-img-top" alt="{{ $c->title }}">
+                    <img src="{{ asset('storage/images/'.$c->image) }}" class="card-img-top" alt="{{ $c->title }}" style="width:100%;height:50vh">
                     
                     <div class="card-body">
                         <h5 class="card-title" style="color:black">{{ $c->title }}</h5>

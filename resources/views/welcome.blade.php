@@ -79,7 +79,7 @@
 	<div class="song col-md-12 col-lg-12 mb-12">
 	
 
-    <div class="img"> <img src="{{ asset('storage/images/'.$play->song->image) }}" ></div>
+    <div class="img"> <img src="{{ asset('storage/images/'.$play->song->image) }}" style="width:100%;height:50vh"></div>
              
       <div class="more">
       <audio src="{{asset('images/1.jpg')}}" id="music"></audio>
