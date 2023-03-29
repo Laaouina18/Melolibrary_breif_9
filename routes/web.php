@@ -56,4 +56,4 @@ Route::resource('/artist',ArtistController::class);
 Route::resource('/song',SongController::class);
 Route::resource('/genre',GenreController::class);
 Route::resource('/groupe',GrController::class);
-Route::resource('/comments',CommentController::class);
+Route::resource('/comments',CommentController::class);              

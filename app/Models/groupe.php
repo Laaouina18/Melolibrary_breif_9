@@ -14,6 +14,6 @@ protected $primarykey='id' ;
 protected $fillable = ['name','description', 'image', 'pays', 'date_creation', '_token'];
 public function songs()
 {
-    return $this->hasMany(Song::class);
+    return $this->belongsTo(Genre::class);
 }
 }
